@@ -19,6 +19,7 @@ docs/
 |------------|----------|
 | See the project architecture vision | [architecture/vision.md](architecture/vision.md) |
 | Understand module integration patterns | [architecture/integration-patterns.md](architecture/integration-patterns.md) |
+| See the bookstore system design | [architecture/bookstore-system-design.md](architecture/bookstore-system-design.md) |
 | Read coding principles | [principles/](principles/) |
 | Check an ADR | [architecture/decisions/](architecture/decisions/) |
 | Use the developer CLI | [guides/odoo-project-cli.md](guides/odoo-project-cli.md) |
