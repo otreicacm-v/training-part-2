@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_trn_vocabulary_code_form_identifier" model="ir.ui.view">
+        <field name="name">trn.vocabulary.code.form.identifier</field>
+        <field name="model">trn.vocabulary.code</field>
+        <field name="inherit_id" ref="trn_vocabulary.view_trn_vocabulary_code_form"/>
+        <field name="arch" type="xml">
+            <!-- Loaded so the tab below can test it; the namespace itself is
+                 already visible through the uri field. -->
+            <xpath expr="//field[@name='uri']" position="after">
+                <field name="namespace_uri" invisible="1"/>
+            </xpath>
+
+            <!-- Section: Identifier configuration.
+                 Only meaningful for codes in the identifier-type vocabulary,
+                 so the tab is hidden entirely for every other vocabulary. -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Identifier Type" name="identifier_type"
+                      invisible="namespace_uri != 'urn:tpl:vocab:identifier-type'">
+                    <group name="identifier_configuration">
+                        <field name="id_validation"/>
+                        <field name="target_type"/>
+                    </group>
+                    <group name="additional_identifier_configuration" invisible="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

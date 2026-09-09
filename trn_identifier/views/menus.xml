@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Identifiers are normally managed from the Identifiers tab on a
+         partner. This flat list exists for administrative search across
+         partners, and sits under the shared trn Configuration menu until a
+         project app module defines an app root menu to move it under. -->
+    <menuitem
+        id="menu_trn_identifier_list"
+        name="Identifiers"
+        parent="trn_vocabulary.menu_trn_configuration"
+        action="action_trn_identifier"
+        sequence="10"
+    />
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="category_trn_identifier" model="ir.module.category">
+        <field name="name">trn Identifier</field>
+        <field name="sequence">6</field>
+    </record>
+
+    <record id="privilege_identifier_officer" model="res.groups.privilege">
+        <field name="name">Identifier Officer</field>
+        <field name="category_id" ref="category_trn_identifier"/>
+    </record>
+
+    <!-- Viewer: read-only. Identifier values are personally identifying, so
+         read access is granted by this group rather than to all internal
+         users through base.group_user. -->
+    <record id="group_identifier_viewer" model="res.groups">
+        <field name="name">Identifier: Viewer</field>
+        <field name="comment">Read-only access to partner identifiers.
+Granted explicitly because identifier values are personally identifying
+and are not readable by all internal users.</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Officer: record and correct identifiers -->
+    <record id="group_identifier_officer" model="res.groups">
+        <field name="name">Identifier: Officer</field>
+        <field name="comment">Create and edit partner identifiers.
+Implies Viewer permissions.</field>
+        <field name="privilege_id" ref="privilege_identifier_officer"/>
+        <field name="implied_ids" eval="[Command.link(ref('group_identifier_viewer'))]"/>
+    </record>
+
+    <!-- Manager: full access including deletion -->
+    <record id="group_identifier_manager" model="res.groups">
+        <field name="name">Identifier: Manager</field>
+        <field name="comment">Full access including deletion of partner identifiers.
+Deletion matters because a retired identifier value stays reserved until
+its record is removed.</field>
+        <field name="privilege_id" ref="privilege_identifier_officer"/>
+        <field name="implied_ids" eval="[Command.link(ref('group_identifier_officer'))]"/>
+    </record>
+
+    <!-- The Identifiers tab on a partner is gated on the viewer group, which
+         base.group_system does not imply. Without this the module installs
+         with its UI invisible to everyone, including the administrator.
+         Granting the group to the admin user leaves base groups untouched. -->
+    <record id="base.user_admin" model="res.users">
+        <field name="group_ids" eval="[Command.link(ref('trn_identifier.group_identifier_manager'))]"/>
+    </record>
+</odoo>
