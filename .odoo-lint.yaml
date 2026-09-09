@@ -74,6 +74,7 @@ rules:
       - "line_ids" # Generic line items (typically <20)
       - "manager_ids" # Program managers (typically <10)
       - "approver_ids" # Approval workflow (typically <5)
+      - "identifier_ids" # Partner identifiers (typically <10)
 
 # Severity overrides (change default severity for rules)
 # Valid values: error, warning, info
