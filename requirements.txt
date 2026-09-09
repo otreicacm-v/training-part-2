@@ -34,6 +34,6 @@ requests>=2.25.1
 schwifty
 shapely
 simplejson
-ujson>=5.4.0
+ujson>=6.0.0
 urllib3>=1.26.5
 zipp>=3.19.1
