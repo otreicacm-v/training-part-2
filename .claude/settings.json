@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pre-commit run:*)",
+      "Bash(./odoo-project test:*)",
+      "Bash(./odoo-project audit-security:*)",
+      "Bash(./odoo-project audit-modules:*)",
+      "Bash(./odoo-project fix-lint:*)",
+      "Bash(./odoo-project fix-security:*)",
+      "Bash(./odoo-project fix-odoo19:*)",
+      "Bash(python odoo-project:*)",
+      "Bash(./scripts/test_single_module.sh:*)",
+      "Bash(./scripts/audit-modules.sh:*)",
+      "Bash(./scripts/audit-security.sh:*)",
+      "Bash(./scripts/fix-lint.sh:*)",
+      "Bash(./scripts/fix-security.sh:*)",
+      "Bash(./scripts/fix-odoo19.sh:*)",
+      "Bash(python scripts/lint/odoo_lint.py:*)",
+      "Bash(python scripts/lint/check_odoo19.py:*)",
+      "Bash(python scripts/security_audit.py:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(git ls-files:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh issue:*)",
+      "Bash(docker compose:*)",
+      "Bash(ls:*)",
+      "Bash(ruff check:*)",
+      "WebSearch"
+    ]
+  }
+}

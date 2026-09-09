@@ -1,0 +1,40 @@
+name: Build and Test (local act)
+
+on:
+  workflow_dispatch: # Manual trigger only
+
+env:
+  OCA_GIT_USER_NAME: odoo-bot
+  OCA_GIT_USER_EMAIL: bot@example.org
+
+jobs:
+  test-local:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/oca/oca-ci/py3.10-odoo19.0:latest
+    name: Test Odoo Project (local)
+
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4-alpine
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: odoo
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install addons and dependencies
+        run: oca_install_addons
+
+      - name: Initialize test db
+        run: oca_init_test_database
+
+      - name: Run tests
+        run: oca_run_tests
+        env:
+          ADDONS: trn_vocabulary

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="category_trn_vocabulary" model="ir.module.category">
+        <field name="name">trn Vocabulary</field>
+        <field name="sequence">5</field>
+    </record>
+
+    <record id="privilege_vocabulary_officer" model="res.groups.privilege">
+        <field name="name">Vocabulary Officer</field>
+        <field name="category_id" ref="category_trn_vocabulary"/>
+    </record>
+
+    <!-- Viewer: extension point for downstream modules to attach
+         record rules. Permissions come from base.group_user ACL rows. -->
+    <record id="group_vocabulary_viewer" model="res.groups">
+        <field name="name">Vocabulary: Viewer</field>
+        <field name="comment">Read-only access to vocabularies and codes.
+Serves as an extension point for downstream modules to attach
+record rules (e.g., company-scoped visibility).</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Officer: create and edit vocabularies and codes -->
+    <record id="group_vocabulary_officer" model="res.groups">
+        <field name="name">Vocabulary: Officer</field>
+        <field name="comment">Create and edit vocabularies and codes.
+Implies Viewer permissions.</field>
+        <field name="privilege_id" ref="privilege_vocabulary_officer"/>
+        <field name="implied_ids" eval="[Command.link(ref('group_vocabulary_viewer'))]"/>
+    </record>
+
+    <!-- Manager: full access including deletion -->
+    <record id="group_vocabulary_manager" model="res.groups">
+        <field name="name">Vocabulary: Manager</field>
+        <field name="comment">Full access including deletion of vocabularies and codes.
+Implies Officer permissions.</field>
+        <field name="privilege_id" ref="privilege_vocabulary_officer"/>
+        <field name="implied_ids" eval="[Command.link(ref('group_vocabulary_officer'))]"/>
+    </record>
+</odoo>

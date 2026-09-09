@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- ABO/Rh blood type classification -->
+    <record id="vocab_blood_type" model="trn.vocabulary">
+        <field name="name">Blood Type</field>
+        <field name="namespace_uri">urn:tpl:vocab:blood-type</field>
+        <field name="description">ABO blood group system with Rh factor classification.</field>
+        <field name="is_system" eval="True"/>
+        <field name="domain">operations</field>
+    </record>
+
+    <record id="code_blood_a_pos" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_blood_type"/>
+        <field name="code">A+</field>
+        <field name="display">A+</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="code_blood_a_neg" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_blood_type"/>
+        <field name="code">A-</field>
+        <field name="display">A-</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="code_blood_b_pos" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_blood_type"/>
+        <field name="code">B+</field>
+        <field name="display">B+</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="code_blood_b_neg" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_blood_type"/>
+        <field name="code">B-</field>
+        <field name="display">B-</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="code_blood_ab_pos" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_blood_type"/>
+        <field name="code">AB+</field>
+        <field name="display">AB+</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="code_blood_ab_neg" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_blood_type"/>
+        <field name="code">AB-</field>
+        <field name="display">AB-</field>
+        <field name="sequence">60</field>
+    </record>
+
+    <record id="code_blood_o_pos" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_blood_type"/>
+        <field name="code">O+</field>
+        <field name="display">O+</field>
+        <field name="sequence">70</field>
+    </record>
+
+    <record id="code_blood_o_neg" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_blood_type"/>
+        <field name="code">O-</field>
+        <field name="display">O-</field>
+        <field name="sequence">80</field>
+    </record>
+</odoo>

@@ -1,0 +1,41 @@
+{
+  "_meta": {
+    "description": "Translation glossary for consistent terminology across languages. Add your project's domain-specific terms here.",
+    "version": "1.0.0",
+    "languages": ["en", "fr", "es"],
+    "last_updated": "2026-03-03",
+    "usage": "Used by scripts/translate_agent.py and scripts/translate_verify.py to ensure consistent translations."
+  },
+  "terms": {
+    "contact": {
+      "en": "Contact",
+      "fr": "Contact",
+      "es": "Contacto",
+      "context": "An individual or organization in the system"
+    },
+    "vocabulary": {
+      "en": "Vocabulary",
+      "fr": "Vocabulaire",
+      "es": "Vocabulario",
+      "context": "A named collection of codes with a namespace URI"
+    },
+    "code": {
+      "en": "Code",
+      "fr": "Code",
+      "es": "Código",
+      "context": "An individual value within a vocabulary"
+    },
+    "configuration": {
+      "en": "Configuration",
+      "fr": "Configuration",
+      "es": "Configuración",
+      "context": "System settings and preferences"
+    },
+    "identifier": {
+      "en": "Identifier",
+      "fr": "Identifiant",
+      "es": "Identificador",
+      "context": "A unique reference for an entity (e.g., tax ID, registration number)"
+    }
+  }
+}

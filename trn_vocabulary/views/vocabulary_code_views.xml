@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_trn_vocabulary_code_form" model="ir.ui.view">
+        <field name="name">trn.vocabulary.code.form</field>
+        <field name="model">trn.vocabulary.code</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="display" placeholder="e.g. Male"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="vocabulary_id"/>
+                            <field name="code"/>
+                            <field name="uri"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Definition" name="definition">
+                            <field name="definition"/>
+                            <group name="additional_definition" invisible="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_trn_vocabulary_code_list" model="ir.ui.view">
+        <field name="name">trn.vocabulary.code.list</field>
+        <field name="model">trn.vocabulary.code</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="display"/>
+                <field name="vocabulary_id"/>
+                <field name="uri"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_trn_vocabulary_code_search" model="ir.ui.view">
+        <field name="name">trn.vocabulary.code.search</field>
+        <field name="model">trn.vocabulary.code</field>
+        <field name="arch" type="xml">
+            <search string="Search Vocabulary Codes">
+                <field name="code"/>
+                <field name="display"/>
+                <field name="vocabulary_id"/>
+                <field name="namespace_uri"/>
+                <separator/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <group name="group_by">
+                    <filter name="group_vocabulary" string="Vocabulary"
+                            context="{'group_by': 'vocabulary_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_trn_vocabulary_code" model="ir.actions.act_window">
+        <field name="name">Vocabulary Codes</field>
+        <field name="res_model">trn.vocabulary.code</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

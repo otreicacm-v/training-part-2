@@ -1,0 +1,89 @@
+# ZAP Surface Scan Configuration for Odoo project
+#
+# Scans unauthenticated attack surface only. Not a substitute for
+# authenticated penetration testing. Finds public endpoints, exposed
+# admin interfaces, and misconfigured routes that should require
+# authentication. Passive scanning only — safe for any environment.
+#
+# Output reports:
+#   - zap_report.html (human-readable)
+#   - zap_report.json (machine-readable)
+#
+# Usage:
+#   make zap-scan
+#   or directly: ./scripts/zap/run-baseline.sh
+
+env:
+  contexts:
+    - name: "Odoo Project"
+      urls:
+        - "${TARGET_URL}"
+      includePaths:
+        - "${TARGET_URL}.*"
+      excludePaths:
+        # Exclude static assets - not security relevant
+        - ".*\\.js$"
+        - ".*\\.css$"
+        - ".*\\.png$"
+        - ".*\\.jpg$"
+        - ".*\\.gif$"
+        - ".*\\.ico$"
+        - ".*\\.woff2?$"
+        - ".*\\.ttf$"
+        - ".*/static/.*"
+        # Exclude long-polling endpoints that timeout
+        - ".*/longpolling/.*"
+
+  parameters:
+    failOnError: false
+    failOnWarning: false
+    progressToStdout: true
+
+jobs:
+  # Seed known public endpoints so the spider has starting points.
+  # Odoo exposes these routes without authentication.
+  - type: requestor
+    parameters:
+      user: ""
+    requests:
+      - url: "${TARGET_URL}/web/login"
+      - url: "${TARGET_URL}/web/database/selector"
+      - url: "${TARGET_URL}/web/reset_password"
+      - url: "${TARGET_URL}/sitemap.xml"
+      - url: "${TARGET_URL}/robots.txt"
+
+  # Spider the application to discover pages
+  - type: spider
+    parameters:
+      context: "Odoo Project"
+      maxDuration: 60
+      maxDepth: 8
+
+  # Wait for passive scanning to complete
+  - type: passiveScan-wait
+    parameters:
+      maxDuration: 60
+
+  # Generate HTML report
+  - type: report
+    parameters:
+      template: "traditional-html"
+      reportDir: "${REPORT_DIR}"
+      reportFile: "zap_report"
+    risks:
+      - high
+      - medium
+      - low
+      - info
+
+  # Generate JSON report for programmatic analysis
+  - type: report
+    parameters:
+      template: "traditional-json"
+      reportDir: "${REPORT_DIR}"
+      reportFile: "zap_report"
+    risks:
+      - high
+      - medium
+      - low
+      - info

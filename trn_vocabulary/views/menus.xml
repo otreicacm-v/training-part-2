@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top-level Configuration menu for all trn modules.
+         Parented under base.menu_custom until a project app module
+         defines menu_trn_root. -->
+    <menuitem
+        id="menu_trn_configuration"
+        name="Configuration"
+        parent="base.menu_custom"
+        groups="base.group_system"
+        sequence="90"
+    />
+
+    <menuitem
+        id="menu_trn_configuration_vocabularies"
+        name="Vocabularies"
+        parent="base.menu_administration"
+        groups="base.group_system"
+        sequence="50"
+    />
+    <menuitem
+        id="menu_vocabulary_list"
+        name="Vocabularies"
+        parent="menu_trn_configuration_vocabularies"
+        action="action_trn_vocabulary"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_vocabulary_code_list"
+        name="Codes"
+        parent="menu_trn_configuration_vocabularies"
+        action="action_trn_vocabulary_code"
+        sequence="20"
+    />
+</odoo>

@@ -1,0 +1,61 @@
+# Public Export Configuration
+# Controls which modules and files are exported to the public repo.
+# Add modules here to include them in the public release.
+
+[export]
+# Odoo module directories to export (each must contain __manifest__.py)
+modules = [
+    # Foundation
+    "trn_vocabulary",
+]
+
+# Non-module directories to export
+extra_directories = [
+    ".semgrep",
+    ".github",
+]
+
+# Root-level files to copy
+root_files = [
+    "LICENSE",
+    "requirements.txt",
+    "pyproject.toml",
+    "docker-compose.yml",
+    ".gitignore",
+    ".dockerignore",
+    ".pre-commit-config.yaml",
+    ".pylintrc",
+    ".pylintrc-mandatory",
+    "odoo-project",
+    "CONTRIBUTORS.md",
+    ".gitleaks.toml",
+    ".trivyignore.yaml",
+]
+
+# Subdirectories to copy (preserves directory structure, creates parents)
+extra_subdirectories = [
+    "scripts/lint",
+    "scripts/compliance",
+]
+
+# Individual files from subdirectories to copy (preserves directory structure)
+scripts_files = [
+    "scripts/test_single_module.sh",
+    "scripts/detect_modules.py",
+    "scripts/audit-api-auth.py",
+]
+
+# Docker setup directory
+docker_directory = "docker"
+
+[external_dependencies]
+# OCA and third-party repos that users must install separately.
+# These satisfy Odoo module dependencies not included in the export.
+
+[external_dependencies.repos]
+"OCA/queue" = { branch = "19.0", modules = ["queue_job"] }
+"OCA/server-ux" = { branch = "19.0", modules = ["base_technical_user"] }
+"OCA/server-tools" = { branch = "19.0", modules = ["base_sparse_field"] }
+"OCA/server-backend" = { branch = "19.0", modules = ["base_user_role"] }
+"OCA/rest-framework" = { branch = "19.0", modules = ["extendable", "extendable_fastapi"] }
+"muk-it/odoo-modules" = { branch = "19.0", modules = ["muk_web_theme", "muk_web_chatter"] }

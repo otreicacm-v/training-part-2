@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_trn_vocabulary_system,trn.vocabulary / System,model_trn_vocabulary,base.group_system,1,1,1,1
+access_trn_vocabulary_user,trn.vocabulary / User,model_trn_vocabulary,base.group_user,1,0,0,0
+access_trn_vocabulary_officer,trn.vocabulary / Officer,model_trn_vocabulary,group_vocabulary_officer,1,1,1,0
+access_trn_vocabulary_manager,trn.vocabulary / Manager,model_trn_vocabulary,group_vocabulary_manager,1,1,1,1
+access_trn_vocabulary_code_system,trn.vocabulary.code / System,model_trn_vocabulary_code,base.group_system,1,1,1,1
+access_trn_vocabulary_code_user,trn.vocabulary.code / User,model_trn_vocabulary_code,base.group_user,1,0,0,0
+access_trn_vocabulary_code_officer,trn.vocabulary.code / Officer,model_trn_vocabulary_code,group_vocabulary_officer,1,1,1,0
+access_trn_vocabulary_code_manager,trn.vocabulary.code / Manager,model_trn_vocabulary_code,group_vocabulary_manager,1,1,1,1

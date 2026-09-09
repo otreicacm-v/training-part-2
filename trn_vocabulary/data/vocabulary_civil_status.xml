@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- UN Standard for marital status in population censuses -->
+    <record id="vocab_civil_status" model="trn.vocabulary">
+        <field name="name">Civil Status</field>
+        <field name="namespace_uri">urn:un:unsd:pop-census:marital-status</field>
+        <field name="description">United Nations recommended classification for marital status used in population and housing censuses.</field>
+        <field name="reference_url">https://unstats.un.org/unsd/demographic/sconcerns/mar/marital-status.htm</field>
+        <field name="is_system" eval="True"/>
+        <field name="domain">core</field>
+    </record>
+
+    <record id="code_civil_never_married" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_civil_status"/>
+        <field name="code">S</field>
+        <field name="display">Never Married</field>
+        <field name="definition">A person who has never been married.</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="code_civil_married" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_civil_status"/>
+        <field name="code">M</field>
+        <field name="display">Married</field>
+        <field name="definition">A person who has a living spouse.</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="code_civil_widowed" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_civil_status"/>
+        <field name="code">W</field>
+        <field name="display">Widowed</field>
+        <field name="definition">A person whose spouse has died and who has not remarried.</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="code_civil_divorced" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_civil_status"/>
+        <field name="code">D</field>
+        <field name="display">Divorced</field>
+        <field name="definition">A person whose marriage has been legally dissolved.</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="code_civil_separated" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_civil_status"/>
+        <field name="code">L</field>
+        <field name="display">Separated</field>
+        <field name="definition">A married person who no longer lives with their spouse.</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="code_civil_consensual_union" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_civil_status"/>
+        <field name="code">C</field>
+        <field name="display">Consensual Union</field>
+        <field name="definition">A person living in a consensual union (common-law partnership).</field>
+        <field name="sequence">60</field>
+    </record>
+</odoo>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_trn_vocabulary_form" model="ir.ui.view">
+        <field name="name">trn.vocabulary.form</field>
+        <field name="model">trn.vocabulary</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            type="object"
+                            name="action_view_codes"
+                            icon="fa-list"
+                        >
+                            <field name="code_count" widget="statinfo" string="Codes"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g. Gender"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="namespace_uri"/>
+                            <field name="domain"/>
+                            <field name="is_system"/>
+                        </group>
+                        <group>
+                            <field name="version"/>
+                            <field name="reference_url" widget="url"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description"/>
+                            <group name="additional_description" invisible="1"/>
+                        </page>
+                        <page string="Codes" name="codes">
+                            <field name="code_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="code"/>
+                                    <field name="display"/>
+                                    <field name="uri"/>
+                                    <field name="active" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_trn_vocabulary_list" model="ir.ui.view">
+        <field name="name">trn.vocabulary.list</field>
+        <field name="model">trn.vocabulary</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="namespace_uri"/>
+                <field name="domain"/>
+                <field name="code_count"/>
+                <field name="is_system"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_trn_vocabulary_search" model="ir.ui.view">
+        <field name="name">trn.vocabulary.search</field>
+        <field name="model">trn.vocabulary</field>
+        <field name="arch" type="xml">
+            <search string="Search Vocabulary">
+                <field name="name"/>
+                <field name="namespace_uri"/>
+                <separator/>
+                <filter name="system" string="System" domain="[('is_system', '=', True)]"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <group name="group_by">
+                    <filter name="group_domain" string="Domain"
+                            context="{'group_by': 'domain'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_trn_vocabulary" model="ir.actions.act_window">
+        <field name="name">Vocabularies</field>
+        <field name="res_model">trn.vocabulary</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,55 @@
+name: tests (PyPI)
+# fetching dependencies from PyPI
+
+on:
+  workflow_dispatch: # Manual trigger only
+
+env:
+  OCA_GIT_USER_NAME: odoo-bot
+  OCA_GIT_USER_EMAIL: bot@example.org
+
+jobs:
+  unreleased-deps:
+    runs-on: ubuntu-latest
+    name: Detect unreleased dependencies
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          for reqfile in requirements.txt test-requirements.txt ; do
+              if [ -f ${reqfile} ] ; then
+                  result=0
+                  grep "^[^#].*/" ${reqfile} || result=$?
+                  if [ $result -eq 0 ] ; then
+                      echo "Unreleased dependencies found in ${reqfile}."
+                  fi
+              fi
+          done
+
+  test:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
+    name: Test (PyPI)
+
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4-alpine
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: odoo
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install addons and dependencies
+        run: oca_install_addons
+
+      - name: Initialize test db
+        run: oca_init_test_database
+
+      - name: Run tests
+        run: oca_run_tests

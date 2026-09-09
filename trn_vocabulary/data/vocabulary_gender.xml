@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- ISO 5218: Codes for the representation of human sexes -->
+    <record id="vocab_gender" model="trn.vocabulary">
+        <field name="name">Gender</field>
+        <field name="namespace_uri">urn:iso:std:iso:5218</field>
+        <field name="version">2004</field>
+        <field name="description">ISO 5218 standard for the representation of human sexes. Used internationally for demographic data exchange.</field>
+        <field name="reference_url">https://www.iso.org/standard/36266.html</field>
+        <field name="is_system" eval="True"/>
+        <field name="domain">core</field>
+    </record>
+
+    <record id="code_gender_not_known" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_gender"/>
+        <field name="code">0</field>
+        <field name="display">Not Known</field>
+        <field name="definition">The gender has not been recorded or is not available.</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="code_gender_male" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_gender"/>
+        <field name="code">1</field>
+        <field name="display">Male</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="code_gender_female" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_gender"/>
+        <field name="code">2</field>
+        <field name="display">Female</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="code_gender_not_applicable" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_gender"/>
+        <field name="code">9</field>
+        <field name="display">Not Applicable</field>
+        <field name="definition">The gender concept is not applicable in this context.</field>
+        <field name="sequence">40</field>
+    </record>
+</odoo>

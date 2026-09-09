@@ -1,0 +1,71 @@
+name: Build Environment Cache
+
+on:
+  workflow_dispatch: # Manual trigger only
+
+jobs:
+  build-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpq-dev libldap2-dev libsasl2-dev postgresql
+          sudo service postgresql start
+          sudo -u postgres psql -c "CREATE USER odoo WITH PASSWORD 'odoo_password' SUPERUSER;"
+
+      - name: Build environment from scratch
+        run: |
+          export PATH="$HOME/.cargo/bin:$PATH"
+          ./scripts/setup_test_env.sh --force --no-cache
+
+      - name: Build venv-only cache (for Cloudflare)
+        run: ./scripts/build_env_cache.sh build-venv
+
+      - name: Build full cache (for GitHub)
+        run: ./scripts/build_env_cache.sh build
+
+      - name: Upload venv cache as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: odoo19-venv-cache
+          path: /tmp/odoo19-venv-*.tar.gz
+          retention-days: 30
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: odoo19-env-cache-v1
+          name: Odoo 19 Environment Cache
+          files: |
+            /tmp/odoo19-env-*.tar.gz
+            /tmp/odoo19-venv-*.tar.gz
+          body: |
+            Pre-built environment caches for fast test setup.
+
+            **Venv-only (~150MB)** - For Cloudflare/CDN hosting:
+            - `odoo19-venv-v1.0.0.tar.gz`
+
+            **Full bundle (~350MB)** - Includes Odoo source:
+            - `odoo19-env-v1.0.0.tar.gz`
+
+            Usage:
+            ```bash
+            # Automatic (uses Cloudflare venv + GitHub Odoo)
+            ./scripts/setup_test_env.sh
+
+            # Manual restore
+            ./scripts/build_env_cache.sh restore <download-url>
+            ```
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
