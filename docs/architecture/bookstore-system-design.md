@@ -123,7 +123,9 @@ Layer 2: trn_bookstore            Counter flow: slip -> verify payment -> releas
               |
 Layer 1: trn_school_base          Students, grade levels, SIS import
               |
-Layer 0: sale, stock, purchase, account, product
+Layer 1: trn_identifier           Typed external identifiers on res.partner
+              |
+Layer 0: sale, stock, purchase, account, product, trn_vocabulary
 ```
 
 ### 5.1 Why three modules
@@ -141,9 +143,14 @@ not yet seen. When the finance office specifies the format they can load, exactl
 
 | Module | `application` | `auto_install` | Rationale |
 |--------|--------------|----------------|-----------|
+| `trn_identifier` | `False` | `False` | Foundation library |
 | `trn_school_base` | `False` | `False` | Foundation library, not a user-facing app |
-| `trn_bookstore` | `True` | `False` | The app bookstore staff open |
+| `trn_bookstore` | `False` | `False` | Domain module |
 | `trn_bookstore_billing` | `False` | `False` | Optional extension, installed when finance is ready |
+
+`application=False` throughout, per `.claude/rules/module-setup.md`: only starter modules
+(`trn_starter_{country}`) set `application=True`. Menu placement, not the application flag, is what makes the
+bookstore reachable for staff.
 
 ## 6. Data model
 
@@ -159,13 +166,27 @@ Fields added by `trn_school_base`:
 | Field | Type | Notes |
 |-------|------|-------|
 | `is_student` | Boolean | Marks the partner as a student |
-| `student_number` | Char | The SIS identifier; unique, indexed, the import merge key |
 | `grade_level_id` | Many2one → `trn.grade.level` | |
 | `section_id` | Many2one → `trn.school.section` | |
 | `school_year_id` | Many2one → `trn.school.year` | |
 | `enrollment_state` | Selection | `enrolled` / `not_enrolled` — never delete, only mark |
 | `is_provisional` | Boolean | Clerk-created, awaiting confirmation from the SIS import |
 | `last_import_date` | Datetime | When the SIS import last touched this record |
+
+**The student number is not a field on `res.partner`.** It is a `trn.identifier` record typed by a vocabulary code,
+per `.claude/rules/odoo-python.md` ("Do not add ID fields directly on `res.partner`") and ADR-007. Lookup at the
+counter is an indexed search on `(system_uri, value)`:
+
+```python
+self.env["trn.identifier"].search([
+    ("system_uri", "=", "urn:tpl:vocab:identifier-type#student-number"),
+    ("value", "=", scanned_value),
+], limit=1).partner_id
+```
+
+This costs one join at the counter and buys the ability to add identifier types — a Learner Reference Number,
+a national ID — through data files rather than a schema change. Wherever this document says "student number",
+it means that identifier's value.
 
 New models in `trn_school_base`:
 
@@ -325,6 +346,7 @@ Question 5 does not block development: the design targets Odoo 19 Community, whi
 
 | Phase | Deliverable | Why this order |
 |-------|-------------|----------------|
+| 0 | `trn_identifier` — `trn.identifier` typed by vocabulary, `identifier_ids` on `res.partner` | The student number is the SIS merge key and the anchor for provisional-record promotion; putting it in the wrong place first means migrating every student record later |
 | 1 | `trn_school_base` — student model, grade levels, SIS import, provisional records | Everything depends on students existing; independently testable against a sample SIS export |
 | 2 | `trn_bookstore` products and stock — categories, variants, barcodes, purchase and receiving | Stock must be real before sales against it mean anything |
 | 3 | `trn_bookstore` counter flow — the state machine, slip PDF, payment verification, release | The core of the system; needs phases 1 and 2 in place |
