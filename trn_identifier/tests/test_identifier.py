@@ -117,9 +117,7 @@ class TestIdentifier(TransactionCase):
         """A code from another vocabulary cannot be used as an identifier type."""
         gender_code = self.env.ref("trn_vocabulary.code_gender_female")
         with self.assertRaises(ValidationError):
-            self.env["trn.identifier"].create(
-                {"partner_id": self.person.id, "type_id": gender_code.id, "value": "X"}
-            )
+            self.env["trn.identifier"].create({"partner_id": self.person.id, "type_id": gender_code.id, "value": "X"})
 
     def test_find_partner_returns_the_holder(self):
         """Lookup by namespace and value returns the partner holding it."""
