@@ -15,6 +15,7 @@ This directory contains Architecture Decision Records documenting significant ar
 | [018](ADR-018-dms-security-and-storage-enhancements.md) | DMS Security & Storage Enhancements | **Implemented** | 2025-12-14 | AV scanning, pluggable storage, audit |
 | [020](ADR-020-unified-api-audit-log.md) | Unified API Audit Log | Accepted | 2025-12-14 | Single audit model for all API operations |
 | [022](ADR-022-api-v2-application-level-authorization.md) | API V2 Application-Level Authorization | Accepted | 2025-12-14 | Scope + consent-based API auth |
+| [023](ADR-023-bookstore-counter-on-sale-orders.md) | Bookstore Counter on Sale Orders | Accepted | 2026-09-09 | Build the school bookstore on `sale`, not `point_of_sale` |
 
 ## Status Legend
 
@@ -29,11 +30,11 @@ This directory contains Architecture Decision Records documenting significant ar
 
 ## Context
 
-The remaining ADRs (004, 007, 009-012, 018, 020, 022) cover cross-cutting concerns (security, identifiers, terminology, data classification, encryption, document management, API audit/auth) that apply to any Odoo 19 project using the `trn_*` module convention.
+ADR-023 is specific to the school bookstore system. The remaining ADRs (004, 007, 009-012, 018, 020, 022) cover cross-cutting concerns (security, identifiers, terminology, data classification, encryption, document management, API audit/auth) that apply to any Odoo 19 project using the `trn_*` module convention.
 
 ## Creating New ADRs
 
-1. Use the next available number (currently 023)
+1. Use the next available number (currently 024)
 2. Follow the template: `ADR-NNN-short-title.md`
 3. Include: Status, Date, Context, Decision, Consequences
 4. Update this index after creating
