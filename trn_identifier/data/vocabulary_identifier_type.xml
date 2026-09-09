@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Identifier types. A system vocabulary: downstream modules add their
+         own types through data files (for example a student number in a
+         school module), but users cannot add them through the UI. -->
+    <record id="vocab_identifier_type" model="trn.vocabulary">
+        <field name="name">Identifier Type</field>
+        <field name="namespace_uri">urn:tpl:vocab:identifier-type</field>
+        <field name="description">Kinds of external identifier that can be issued to a partner. Each code carries a globally unique URI so that external systems can reference the type unambiguously.</field>
+        <field name="is_system" eval="True"/>
+        <field name="domain">identity</field>
+    </record>
+
+    <!-- Generic types usable in any deployment. Country-specific and
+         domain-specific types belong in their own modules. Patterns are
+         deliberately permissive: they catch typing mistakes, not every
+         invalid identifier. -->
+    <record id="code_identifier_national_id" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_identifier_type"/>
+        <field name="code">national-id</field>
+        <field name="display">National ID</field>
+        <field name="definition">Identifier issued to a person by their national government.</field>
+        <field name="id_validation">^[A-Za-z0-9-]+$</field>
+        <field name="target_type">person</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="code_identifier_passport" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_identifier_type"/>
+        <field name="code">passport</field>
+        <field name="display">Passport</field>
+        <field name="definition">Travel document number issued to a person by a national authority.</field>
+        <field name="id_validation">^[A-Za-z0-9]+$</field>
+        <field name="target_type">person</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="code_identifier_tax_id" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_identifier_type"/>
+        <field name="code">tax-id</field>
+        <field name="display">Tax ID</field>
+        <field name="definition">Identifier issued by a tax authority. Held by people and organizations alike.</field>
+        <field name="id_validation">^[A-Za-z0-9-]+$</field>
+        <field name="target_type">both</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="code_identifier_birth_certificate" model="trn.vocabulary.code">
+        <field name="vocabulary_id" ref="vocab_identifier_type"/>
+        <field name="code">birth-certificate</field>
+        <field name="display">Birth Certificate</field>
+        <field name="definition">Registration number of a person's birth certificate.</field>
+        <field name="target_type">person</field>
+        <field name="sequence">40</field>
+    </record>
+</odoo>

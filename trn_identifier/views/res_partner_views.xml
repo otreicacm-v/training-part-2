@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_identifier" model="ir.ui.view">
+        <field name="name">res.partner.form.identifier</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Identifiers" name="identifiers"
+                      groups="trn_identifier.group_identifier_viewer">
+                    <field name="identifier_ids">
+                        <list editable="bottom">
+                            <field name="type_id"/>
+                            <field name="value"/>
+                            <field name="system_uri" optional="hide"/>
+                        </list>
+                    </field>
+                    <group name="additional_identifiers" invisible="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

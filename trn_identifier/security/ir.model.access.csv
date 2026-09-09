@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_trn_identifier_system,trn.identifier / System,model_trn_identifier,base.group_system,1,1,1,1
+access_trn_identifier_viewer,trn.identifier / Viewer,model_trn_identifier,group_identifier_viewer,1,0,0,0
+access_trn_identifier_officer,trn.identifier / Officer,model_trn_identifier,group_identifier_officer,1,1,1,0
+access_trn_identifier_manager,trn.identifier / Manager,model_trn_identifier,group_identifier_manager,1,1,1,1
